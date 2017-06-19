@@ -1,10 +1,17 @@
+/* Gunjan Sethi
+ * 19/06/2017, Bangalore, India
+ * This code uses the iBHubs IoT HDK(with ESP8266) to publish data to an MQTTBroker(Raspberry Pi) and subscribing to the same.
+ * Uses: MQTTBox
+ */
+
+
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 const char* ssid = "iBHubs 1";
 const char* password = "";
 WiFiClient espClient;
 PubSubClient client(espClient);
-const char* mqtt_server = "192.168.2.207";//broker's IP address;
+const char* mqtt_server = "192.168.2.207";//broker's IP address-Raspberry Pi
 String clientID = "Team6Client";
 char* message;
 
@@ -24,11 +31,11 @@ void reconnect()
   while (!client.connected()) 
   {
     Serial.print("Attempting MQTT connection...");
-    if (client.connect("Team6Client")) 
+    if (client.connect("Client")) 
     {
       Serial.println("connected");
       Serial.println(Serial.read());
-      client.subscribe("Team6Topic");
+      client.subscribe("Topic");
     }
     else 
     {
@@ -68,7 +75,7 @@ void loop() {
   }
   client.loop();
   Serial.print("Publish message: HHHEEEEYYYY");
-  client.publish("Team6Topic", "HHHEEEEYYYY");
+  client.publish("Topic", "HHHEEEEYYYY");
   delay(1000);
   
 }
